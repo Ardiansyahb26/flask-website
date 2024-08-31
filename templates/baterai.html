@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Jenis Baterai</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #283c86, #45a247);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .box {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 60px;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            animation: slideDown 0.7s ease-in-out;
+        }
+
+        h1 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+            letter-spacing: 1.5px;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            animation: fadeInUp 1.2s ease-in-out;
+        }
+
+        button {
+            background: linear-gradient(to right, #14cda5, #0288d5);
+            color: #fff;
+            font-size: 22px;
+            font-weight: 600;
+            padding: 20px 50px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(20, 205, 165, 0.5);
+            min-width: 150px;
+            text-align: center;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #0288d5, #14cda5);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(2, 136, 213, 0.7);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <h1>PILIH JENIS BATERAI</h1>
+        </div>
+        <div class="button">
+            <form action="/baterai" method="POST">
+                <input type="hidden" name="battery_type" value="18650">
+                <button type="submit">18650</button>
+            </form>
+            <form action="/baterai" method="POST">
+                <input type="hidden" name="battery_type" value="21700">
+                <button type="submit">21700</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
