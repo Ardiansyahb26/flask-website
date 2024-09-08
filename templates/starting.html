@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/css.css">
+    <!-- Menggunakan url_for untuk mengambil CSS dari folder static -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
     <title>Sistem Monitoring SOH dan RUL Kendaraan Listrik</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -43,20 +44,22 @@
             margin-bottom: 40px;
             animation: slideDown 0.7s ease-in-out;
         }
+
         h1 {
-    font-size: 38px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    line-height: 1.2;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    background: linear-gradient(to right, #14cda5, #0288d5);
-    -webkit-background-clip: text; /* Prefix for Safari/Chrome */
-    -moz-background-clip: text; /* Prefix for Firefox */
-    background-clip: text; /* Standard property */
-    -webkit-text-fill-color: transparent; /* For WebKit-based browsers */
-    animation: textGlow 1.5s ease-in-out infinite alternate;
-}
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #14cda5, #0288d5);
+            -webkit-background-clip: text;
+            -moz-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 1.5s ease-in-out infinite alternate;
+        }
+
         h1:first-of-type {
             margin-bottom: 20px;
         }
@@ -161,7 +164,8 @@
             <h1>KENDARAAN LISTRIK</h1>
             <span></span>
         </div>
-        <a href="/baterai">MASUK</a>
+        <!-- Menggunakan url_for untuk routing dinamis -->
+        <a href="{{ url_for('baterai') }}">MASUK</a>
     </div>
 </body>
 
