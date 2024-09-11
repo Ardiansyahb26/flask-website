@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
         }
         body, html {
             height: 100%;
@@ -96,6 +96,14 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
         }
+        @media (max-width: 600px) {
+            .box {
+                flex-direction: column;
+            }
+            .box-1 {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -103,15 +111,15 @@
         <div class="box">
             <div class="box-1">
                 <h2>State of Health</h2>
-                <div class="circle" style="--percentage: {{ predicted_soh }}">
+                <div class="circle" style="--percentage: {{ predicted_soh or 0 }}">
                     <div class="inner">
-                        <div class="value">{{ predicted_soh }}%</div>
+                        <div class="value">{{ predicted_soh or 0 }}%</div>
                     </div>
                 </div>
             </div>
             <div class="box-1">
                 <h2>Voltage</h2>
-                <div class="circle" style="--percentage: {{ voltage * 100 / 4.2 }}">
+                <div class="circle" style="--percentage: {{ (voltage * 100 / 4.2) if voltage else 0 }}">
                     <div class="inner">
                         <div class="value">{{ voltage }} V</div>
                     </div>
@@ -119,7 +127,7 @@
             </div>
         </div>
         <div class="button">
-            <a href="/">Back to Predict</a>
+            <a href="/" role="button" aria-label="Back to Predict">Back to Predict</a>
         </div>
     </div>
 </body>

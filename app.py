@@ -14,7 +14,7 @@ soh = 0
 rul = 0
 
 # Konfigurasi Logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def load_models(battery_type):
     global model_rul_lstm, scaler_rul_lstm, model_rul_dtree, scaler_rul_dtree, model_rul_svr, scaler_rul_svr
@@ -42,10 +42,10 @@ def load_models(battery_type):
         scaler_soh_svr = joblib.load(f'ModelSOH/{battery_type}/scalersvr.pkl')
 
         # Scaler untuk RUL dan SOH
-        scaler_y_rul = MinMaxScaler()
+        scaler_y_rul = MinMaxScaler(feature_range=(0, 100))
         scaler_y_rul.fit(np.array([0, 100]).reshape(-1, 1))
-        scaler_y_soh = MinMaxScaler()
-        scaler_y_soh.fit(np.array([0, 1]).reshape(-1, 1))
+        scaler_y_soh = MinMaxScaler(feature_range=(0, 100))
+        scaler_y_soh.fit(np.array([0, 100]).reshape(-1, 1))
 
         # Memuat model temperatur
         temperature_model_rul_lstm = joblib.load(f'ModelRUL/ModelTemperature/lstm/lstm_model.pkl')
@@ -62,10 +62,10 @@ def load_models(battery_type):
         temperature_model_soh_svr = joblib.load(f'ModelSOH/ModelTemperature/svr/svr.pkl')
         temperature_scaler_soh_svr = joblib.load(f'ModelSOH/ModelTemperature/svr/scalersvr.pkl')
 
-        scaler_y_temperatur = MinMaxScaler()
+        scaler_y_temperatur = MinMaxScaler(feature_range=(0, 100))
         scaler_y_temperatur.fit(np.array([0, 100]).reshape(-1, 1))
-        scaler_y_soh_temperatur = MinMaxScaler()
-        scaler_y_soh_temperatur.fit(np.array([0, 1]).reshape(-1, 1))
+        scaler_y_soh_temperatur = MinMaxScaler(feature_range=(0, 100))
+        scaler_y_soh_temperatur.fit(np.array([0, 100]).reshape(-1, 1))
 
     except FileNotFoundError as e:
         logging.error(f"Error loading model: {e}")
@@ -171,7 +171,7 @@ def predict_soh(voltage):
             raise ValueError(f"Invalid model choice for SOH prediction: {choicemodelsoh}")
 
         soh_prediction = scaler_y_soh.inverse_transform(soh_prediction_scaled.reshape(-1, 1)).flatten()[0]
-        soh_prediction = min(max(int(soh_prediction * 100), 0), 100)  # Konversi ke persentase dan batasi rentang
+        soh_prediction = min(max(int(soh_prediction), 0), 100)  # Konversi ke persentase dan batasi rentang
 
         # Menentukan kapasitas baterai
         kapasitas_nominal = 4973 if battery_type == '21700' else 2955
@@ -266,7 +266,7 @@ def predsoh():
             
             return render_template('resultsoh.html', voltage=voltage, temperatur=temperatur, predicted_soh=predicted_soh, kapasitas_mAh=kapasitas_mAh)
         except Exception as e:
-            logging.error(f"Error in predsoh: {e}")
+            logging.error(f"Error in predsoh: {e}")  
             return jsonify({'error': str(e)}), 500
     return render_template("ceksoh.html")
 
